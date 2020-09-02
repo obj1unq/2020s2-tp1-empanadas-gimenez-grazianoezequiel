@@ -1,8 +1,12 @@
 object galvan{
 	var sueldo=0
-	
-	method cobrarSueldo(monto){sueldo = monto}
+	var dinero=0
+	var deuda=0
+	method sueldo(monto){sueldo = monto; dinero += 0.max(monto-deuda);deuda= 0.max(deuda - monto) }
 	method sueldo(){return sueldo}
+	method gastar(gastos){ deuda += gastos; deuda = 0.max(deuda - dinero); dinero= 0.max(dinero - gastos)}
+	method dinero(){return dinero}
+	method deuda(){return deuda}
 }
 object baigorria{
 	var cantidadDeEmpanadasVendidas=0
@@ -21,7 +25,7 @@ object gimenez{
 	method cambiarSueldoDeGalvan(sueldoNuevo){sueldoDeGalvan=sueldoNuevo}
 	method pagarSueldo(empleado){
 		if(empleado.equals(baigorria)){baigorria.cobrarSueldo(15*baigorria.cantidadDeEmpanadasVendidas())}
-		if(empleado.equals(galvan)){galvan.cobrarSueldo(sueldoDeGalvan)}
+		if(empleado.equals(galvan)){galvan.sueldo(sueldoDeGalvan)}
 		fondo -= empleado.sueldo()
 	}
 	method fondo(){
